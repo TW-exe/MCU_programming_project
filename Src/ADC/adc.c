@@ -56,7 +56,9 @@ uint16_t ADC_Read(uint8_t channel)
     /* Clear completion flags and start the conversion. */
     ADC1->ISR = ADC_ISR_EOC | ADC_ISR_EOS;
     ADC1->CR |= ADC_CR_ADSTART;
-    while ((ADC1->ISR & ADC_ISR_EOC) == 0U) { }
+    
+    //blocking while loop implementation
+    while ((ADC1->ISR & ADC_ISR_EOC) == 0U){}
 
     return (uint16_t)(ADC1->DR & ADC_DR_RDATA);
 }

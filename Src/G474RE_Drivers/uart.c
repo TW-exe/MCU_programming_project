@@ -41,7 +41,7 @@ uint8_t UART_Rx(void) {
 	if (USART3->ISR & USART_ISR_ORE) {
 		USART3->ICR = USART_ICR_ORECF; // Write 1 to clear the Overrun flag
 	}
-	// Wait until the Read Data Register Not Empty (RXNE) flag is set
+	// Wait until the Read Data Register Not Empty (RXNE) flag is set (Blocking UART implementation)
 	while (!(USART3->ISR & USART_ISR_RXNE));
 	// Reading RDR automatically clears the RXNE flag
 	return (uint8_t)(USART3->RDR & 0xFF);
