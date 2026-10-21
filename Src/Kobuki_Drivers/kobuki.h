@@ -39,7 +39,7 @@ typedef struct {
 } Kobuki_Typedef;
 
 
-typedef enum uint8_t {
+typedef enum{
     OFF,
     RED,
     GREEN,

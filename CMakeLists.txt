@@ -21,7 +21,8 @@ enable_language(C ASM)
 set(PROJECT_NAME prac6)
 
 # Create an executable object type
-add_executable(${PROJECT_NAME})
+add_executable(${PROJECT_NAME}
+)
 
 # Include additional CMake files for flags, components, and files
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/flags.cmake)
@@ -35,6 +36,9 @@ target_sources(${PROJECT_NAME} PRIVATE
 	"Src/Kobuki_Drivers/kobuki.c"
   "Src/ADC/adc.c"
   "Src/Ultrasonic/ultrasonic.c"
+  
+  "Src/Sub_FSM/Search_Orient/search_orient.c"
+  "Src/Main_FSM/main_fsm.c"
 )
 
 # Add include directories
@@ -50,6 +54,10 @@ target_include_directories(${PROJECT_NAME} PRIVATE
   Inc/drivers/STM32G4xx_HAL_Driver/Inc
   Inc/drivers/Core/Inc
   Inc/drivers/CMSIS/Device/ST/STM32G4xx/Include
+
+  Src/Sub_FSM/Search_Orient/
+  Src/Main_FSM/
+  
 )
 
 # Compiler options

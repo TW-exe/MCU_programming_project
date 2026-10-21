@@ -37,10 +37,13 @@
 static enum {
     IDLE,
     SEARCH,
-    OBSTACLE,
-    AVOID,
-    OBJECT
+    ORIENT,
+    PATHFIND,
+    STORAGE,
+    DEPOSIT
 } state;
+
+
 
 int main(void) {
     // Both of these only for testing purposes. Not required 
@@ -70,50 +73,54 @@ int main(void) {
         
         Kobuki_Update_LEDs(led_1, led_2);
         
-        // A TEST FSM
+
+        // Functionality FSM
         switch (state) {
             case IDLE:
-                if (kobuki.button == BUTTON_0_START) {
-                    state = SEARCH;
-                    led_1 = RED;
-                    Kobuki_Rotate_Angle_Setpoint(kobuki.angle, 450);
-                    // Kobuki_Drive_Distance_Setpoint(kobuki.distance, 100);
-                } else if (kobuki.button == BUTTON_1_STOP) {
-                    state = SEARCH;
-                    led_1 = RED;
-                    Kobuki_Rotate_Angle_Setpoint(kobuki.angle, 270);
-                    // Kobuki_Drive_Distance_Setpoint(kobuki.distance, -100);
-                } else if (kobuki.button == BUTTON_2_ROTATE) {
-                    state = SEARCH;
-                    led_1 = RED;
-                    Kobuki_Rotate_Angle_Setpoint(kobuki.angle, 90);
-                    // Kobuki_Drive_Distance_Setpoint(kobuki.distance, 1000);
-                } else {
-                    Kobuki_Drive(STOP);
-                }
-                break;
+            break;
                 
             case SEARCH:
-                if ((kobuki.wheeldrop != NULL) ||
-                    ((kobuki.bumper + kobuki.cliff) != NULL) ||
-                    (kobuki.rotation_complete == TRUE) ||
-                    (kobuki.distance_complete == TRUE)) {
-                    state = IDLE;
-                    led_1 = YELLOW;
-                } else {
-                    Kobuki_Rotate_Angle(kobuki.angle);
-                    // Kobuki_Drive_Distance(kobuki.distance);
-                }
-                break;
+            break;
                 
-            case OBSTACLE:
-                break;
+            case ORIENT:
+            break;
                 
-            case AVOID:
-                break;
+            case PATHFIND:
+            break;
                 
-            case OBJECT:
-                break;
+            case STORAGE:
+            break;
+
+            case DEPOSIT:
+            break;
+            
+            default:
+            break;
+        }
+}
+
+        // Transition FSM
+        switch (state) {
+            case IDLE:
+
+            break;
+                
+            case SEARCH:
+            break;
+                
+            case ORIENT:
+            break;
+                
+            case PATHFIND:
+            break;
+                
+            case STORAGE:
+            break;
+            
+            case DEPOSIT:
+            break;
+            
+            default:
+            break;
         }
     }
-}
