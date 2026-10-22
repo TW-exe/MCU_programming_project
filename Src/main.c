@@ -80,7 +80,6 @@ US_Typedef object = {0}; // Zeroed structs to ensure defined behaviour
 volatile uint16_t ultrasonic_read = 0; // Zeroed variables to ensure defined behaviour
 volatile uint16_t adc_read = 0; // Zeroed variables to ensure defined behaviour
     
-
 int main(void) {
 
     Kobuki_Typedef kobuki = {0}; // Zeroed structs to ensure defined behaviour 
@@ -107,7 +106,6 @@ int main(void) {
         Kobuki_Update_LEDs(led_1, led_2);
 
 
-
         //Global safety case switch
         if(kobuki.button == BUTTON_1_STOP || kobuki.bumper == BUMPER || kobuki.cliff == CLIFF || kobuki.wheeldrop == WHEEL_DROP){
             state = IDLE;
@@ -118,6 +116,8 @@ int main(void) {
         // Transition FSM
         switch (state) {
             case IDLE:
+            Kobuki_Drive(STOP);
+            
             if (kobuki.button == BUTTON_0_START) {
                 Reset_Search();
                 state = SEARCH;

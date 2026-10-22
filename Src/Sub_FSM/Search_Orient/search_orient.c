@@ -1,17 +1,22 @@
 //a1923644
 #include <stdlib.h>
 #include "search_orient.h"
-#define Bollard_Sensed 420      //closer then bollard sensed
-#define N_Bollard_Sensed 550    //futher then bollard not sensed
-#define Dist_LayoutA 350        //expected distance of bollard for layout A
-#define Dist_LayoutB 200        //expected distance of bollard for layout B
+
+
+#define Bollard_Sensed 700      //closer then bollard sensed
+#define N_Bollard_Sensed 800   //futher then bollard not sensed
+#define Dist_LayoutA 620        //expected distance of bollard for layout A
+#define Dist_LayoutB 470        //expected distance of bollard for layout B
 #define Dist_Error 50           //error for each side
 #define RotateA (-90)           //rotation for layout A
 #define RotateB (90)            //rotation for layout B
 
+
+Layout decision;                                                     //layout decision                   
+
+
 //SEARCH
 static enum {Search_Rotate, Keep_Searching, Search_Finished} Search_State;  //search states
-static Layout decision;                                                     //layout decision                   
 void Reset_Search(void){
     Search_State = Search_Rotate;                                           //start rotating
 }
@@ -25,14 +30,18 @@ uint8_t Search_FSM(Kobuki_Typedef *kobuki, US_Typedef *object){
                     Kobuki_Drive(STOP);                                     //stop rotating
                     decision = LayoutB;                                     //layout B
                     Search_State = Search_Finished;                         //search finished
-                }   else if (abs(dist - Dist_LayoutA)<=Dist_Error){         //layout A?
+                }   
+                
+                else if (abs(dist - Dist_LayoutA)<=Dist_Error){         //layout A?
                     Kobuki_Drive(STOP);                                     //stop rotating
                     decision = LayoutA;                                     //layout A
                     Search_State = Search_Finished;                         //search finished
-                }   else {
+                }   
+                
+                else {
                     Search_State = Keep_Searching;                          //keep searching
                     Kobuki_Rotate(SEARCH_SPEED);                            //keep rotating
-            }
+                }
         } else {
             Kobuki_Rotate(SEARCH_SPEED);                                    //keep rotating
         }
