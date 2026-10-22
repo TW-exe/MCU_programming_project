@@ -16,8 +16,14 @@
  ******************************************************************************
  */
 
+//Standard C libraries
+#include <stdbool.h>
+#include <stdlib.h>
 #include <stdint.h>
+
+//Application C libraries
 #define STM32G474xx
+
 #include "stm32g4xx.h"
 #include "adc.h"
 #include "kobuki.h"
@@ -44,6 +50,28 @@ static enum {
 } state;
 
 
+typedef enum{
+  ORIENT_OPERATIONAL,
+  ORIENT_SUCCESS,
+  ORIENT_FAIL
+}orient_status_t;
+
+
+typedef struct {
+    bool system_start;
+    bool system_stop;
+    bool wheel_drop;
+    bool bumper;
+    bool search_done;
+    orient_status_t orient_status;
+    bool pathfind_complete;
+    bool storage_complete;
+    bool deposit_complete;
+} FSM_Flags_t;
+
+
+FSM_Flags_t  FSM_flags = {0};
+
 
 int main(void) {
     // Both of these only for testing purposes. Not required 
@@ -53,7 +81,7 @@ int main(void) {
     Kobuki_Typedef kobuki = {0}; // Zeroed structs to ensure defined behaviour 
     US_Typedef object = {0}; // Zeroed structs to ensure defined behaviour
     Kobuki_LED_Enum led_1, led_2;
-    
+
     UART_Init();
     ADC_Init(); // Has to be executed before Ultrasonic Init, because Ultrasonic subroutine uses ADC subroutine
     Ultrasonic_Init();
@@ -72,14 +100,46 @@ int main(void) {
         adc_read = ADC_Read(ADC_CHANNEL_1);
         
         Kobuki_Update_LEDs(led_1, led_2);
+
+
+        //Input checks for FSM flags
+        if(kobuki.button == BUTTON_0_START){
+            FSM_flags.system_start = TRUE;
+        }
+
+        if(kobuki.button == BUTTON_1_STOP){
+            FSM_flags.system_stop = TRUE;
+        }
+        
+        if(kobuki.bumper == BUMPER){
+            FSM_flags.bumper = TRUE;
+        }
+
+        if(kobuki.cliff == CLIFF){
+            FSM_flags.bumper = TRUE;
+        }
+
+        if(kobuki.wheeldrop == WHEEL_DROP){
+            FSM_flags.wheel_drop = TRUE;
+        }
+
+
+
+        //Global safety case switch
+        if(FSM_flags.system_stop || FSM_flags.bumper || FSM_flags.bumper || FSM_flags.wheel_drop){
+            state = IDLE;
+        }
+
         
 
         // Functionality FSM
         switch (state) {
             case IDLE:
+            //Kobuki_Drive(STOP);
             break;
                 
             case SEARCH:
+
             break;
                 
             case ORIENT:
@@ -97,18 +157,31 @@ int main(void) {
             default:
             break;
         }
-}
 
-        // Transition FSM
+                // Transition FSM
         switch (state) {
             case IDLE:
-
+            if (FSM_flags.system_start) {
+                state = SEARCH;
+            }
             break;
                 
             case SEARCH:
+            if(FSM_flags.search_done){
+                state = ORIENT;
+            }
             break;
                 
             case ORIENT:
+            if(FSM_flags.orient_status == ORIENT_FAIL){
+                state = SEARCH;
+            }
+            else if (ORIENT_SUCCESS) {
+                state = PATHFIND;
+            }
+            else if (FSM_flags.orient_status == ORIENT_OPERATIONAL) {
+            //null
+            }
             break;
                 
             case PATHFIND:
@@ -124,3 +197,5 @@ int main(void) {
             break;
         }
     }
+}
+

@@ -13,6 +13,7 @@
 //SEARCH
 static enum {Search_Rotate, Keep_Searching, Search_Finished} Search_State;  //search states
 static Layout decision;                                                     //layout decision                   
+
 void Reset_Search(void){
     Search_State = Search_Rotate;                                           //start rotating
 }
@@ -68,7 +69,7 @@ void Start_Orient(Layout lay) {
 
 
 uint8_t Orient_FSM(Kobuki_Typedef *kobuki, US_Typedef *object){
-    uint16_t dist=object->range_mm;                                    //give distance reading
+    uint16_t dist=object->range_mm;                                   //give distance reading
     int32_t current=kobuki->angle;                                  //give current direction
     switch (Orient_State){
         case Orient_Left:                                           //orient left side
