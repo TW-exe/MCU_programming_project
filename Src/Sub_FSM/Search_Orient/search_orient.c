@@ -57,6 +57,7 @@ uint8_t Search_FSM(Kobuki_Typedef *kobuki, US_Typedef *object){
     case Search_Finished:       //finishing search, do nothing
         return 1;               //search finished
     }
+
     return 0;                   //search not finished
 }    
 
@@ -68,9 +69,13 @@ static uint8_t seen;                                                            
 void Start_Orient(void) {
     Orient_State = Orient_Left;                                     //start with left side
 }
+
+
 uint8_t Orient_FSM(Kobuki_Typedef *kobuki, US_Typedef *object){
+
     uint16_t dist=object->range_mm;                                    //give distance reading
     int32_t current=kobuki->angle;                                  //give current direction
+
     switch (Orient_State){
         case Orient_Left:                                           //orient left side
             if (dist>N_Bollard_Sensed){                             //if bollard not sensed
@@ -83,9 +88,13 @@ uint8_t Orient_FSM(Kobuki_Typedef *kobuki, US_Typedef *object){
             break;
 
         case Orient_Right:                                                              //orient right side
-        if (!seen){                            
-            if (dist<=Bollard_Sensed) seen=1;                                           //if bollard sensed
-        } else if (dist>N_Bollard_Sensed){                                              //find right edge
+            if (!seen){                            
+                if (dist<=Bollard_Sensed){
+                    seen=1;                                           //if bollard sensed
+                }
+            } 
+            
+            else if (dist>N_Bollard_Sensed){                                              //find right edge
                 theta_Right=current;                                                    //set right angle
                 Kobuki_Drive(STOP);                                                     //stop rotating
                 int32_t theta_Center=(theta_Left+theta_Right)/2;                        //calculate center angle
@@ -93,20 +102,21 @@ uint8_t Orient_FSM(Kobuki_Typedef *kobuki, US_Typedef *object){
                 kobuki->rotation_complete=0;                                            
                 Orient_State=Orient_Center;                                             //start orient center
                 break;
-            } 
+                } 
+                
             Kobuki_Rotate(-MIN_SPEED);                                                  //keep rotating right
             break;
         
         case Orient_Center:                                                                     //orient center
-        if (kobuki->rotation_complete){                                                         //if rotation complete
-            Kobuki_Drive(STOP);                                                                 //stop rotating
-            Kobuki_Rotate_Angle_Setpoint(kobuki->angle,(decision==LayoutA)?RotateA:RotateB);    //rotate to either layouts open area
-            kobuki->rotation_complete=0;                                                        //reset rotation complete
-            Orient_State=Orient_Turn;                                                           //start orient turn
-        } else {
-            Kobuki_Rotate_Angle(kobuki->angle);
-        }
-        break;
+            if (kobuki->rotation_complete){                                                         //if rotation complete
+                Kobuki_Drive(STOP);                                                                 //stop rotating
+                Kobuki_Rotate_Angle_Setpoint(kobuki->angle,(decision==LayoutA)?RotateA:RotateB);    //rotate to either layouts open area
+                kobuki->rotation_complete=0;                                                        //reset rotation complete
+                Orient_State=Orient_Turn;                                                           //start orient turn
+            } else {
+                Kobuki_Rotate_Angle(kobuki->angle);
+            }
+            break;
 
         case Orient_Turn:                       //orient to open area
             if (kobuki->rotation_complete){     //if rotation complete

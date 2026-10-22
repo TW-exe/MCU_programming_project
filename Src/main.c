@@ -31,6 +31,7 @@
 #include "ultrasonic.h"
 
 #include "search_orient.h"
+#include "Pathfind.h"
 
 /* Kobuki button values */
 #define BUTTON_0_START  0x01U
@@ -117,7 +118,7 @@ int main(void) {
         switch (state) {
             case IDLE:
             Kobuki_Drive(STOP);
-            
+
             if (kobuki.button == BUTTON_0_START) {
                 Reset_Search();
                 state = SEARCH;
@@ -133,12 +134,15 @@ int main(void) {
                 
             case ORIENT:
             if(Orient_FSM(&kobuki,&object)){
+                Start_Pathfind();
                 state = PATHFIND;
             }
-
             break;
                 
             case PATHFIND:
+            if(Pathfind_FSM(&kobuki)){
+                state = STORAGE;
+            }
             break;
                 
             case STORAGE:
