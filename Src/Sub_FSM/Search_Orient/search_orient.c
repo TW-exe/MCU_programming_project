@@ -1,7 +1,6 @@
 //a1923644
+#include <stdlib.h>
 #include "search_orient.h"
-
-
 #define Bollard_Sensed 420      //closer then bollard sensed
 #define N_Bollard_Sensed 550    //futher then bollard not sensed
 #define Dist_LayoutA 350        //expected distance of bollard for layout A
@@ -13,17 +12,12 @@
 //SEARCH
 static enum {Search_Rotate, Keep_Searching, Search_Finished} Search_State;  //search states
 static Layout decision;                                                     //layout decision                   
-
 void Reset_Search(void){
     Search_State = Search_Rotate;                                           //start rotating
 }
 
-Layout Search_Layout(void){
-    return decision;                                                        //give layout decision
-}
-
 uint8_t Search_FSM(Kobuki_Typedef *kobuki, US_Typedef *object){
-    uint16_t dist= object->range_mm;                                            //give distance reading
+    uint16_t dist=object->range_mm;                                            //give distance reading
     switch (Search_State){
         case Search_Rotate:
             if (dist<=Bollard_Sensed){                                      //if bollard sensed
@@ -62,14 +56,11 @@ static enum {Orient_Left, Orient_Right, Orient_Center, Orient_Turn, Orient_Finis
 static int32_t theta_Left, theta_Right;                                                             //orient angles
 static uint8_t seen;                                                                                //bollard is seen
 
-void Start_Orient(Layout lay) {
-    decision = lay;                                                 //set layout decision
+void Start_Orient(void) {
     Orient_State = Orient_Left;                                     //start with left side
 }
-
-
 uint8_t Orient_FSM(Kobuki_Typedef *kobuki, US_Typedef *object){
-    uint16_t dist=object->range_mm;                                   //give distance reading
+    uint16_t dist=object->range_mm;                                    //give distance reading
     int32_t current=kobuki->angle;                                  //give current direction
     switch (Orient_State){
         case Orient_Left:                                           //orient left side
@@ -122,5 +113,3 @@ uint8_t Orient_FSM(Kobuki_Typedef *kobuki, US_Typedef *object){
         }
         return 0;
     }
-
-
