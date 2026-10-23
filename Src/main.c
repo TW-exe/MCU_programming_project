@@ -75,7 +75,7 @@ typedef struct {
 
 FSM_Flags_t  FSM_flags = {0};
 
-US_Typedef object = {0}; // Zeroed structs to ensure defined behaviour
+US_Typedef object = {0}; // Zeroed structs to ensure defined behaviour`
 
 // Both of these only for testing purposes. Not required 
 volatile uint16_t ultrasonic_read = 0; // Zeroed variables to ensure defined behaviour

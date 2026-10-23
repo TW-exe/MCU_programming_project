@@ -5,9 +5,9 @@
 
 #define Bollard_Sensed 700      //closer then bollard sensed
 #define N_Bollard_Sensed 800   //futher then bollard not sensed
-#define Dist_LayoutA 620        //expected distance of bollard for layout A
+#define Dist_LayoutA 610        //expected distance of bollard for layout A
 #define Dist_LayoutB 470        //expected distance of bollard for layout B
-#define Dist_Error 50           //error for each side
+#define Dist_Error 60           //error for each side
 #define RotateA (-90)           //rotation for layout A
 #define RotateB (90)            //rotation for layout B
 
