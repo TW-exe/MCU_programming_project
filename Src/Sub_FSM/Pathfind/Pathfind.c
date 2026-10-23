@@ -1,8 +1,8 @@
 #include "pathfind.h"
 #define First_MoveA 1200        //moving to section 4 for layout A
-#define Second_MoveA 1400       //moving to section 3 for layout A
+#define Second_MoveA 1350       //moving to section 3 for layout A
 #define First_MoveB 1400        //moving to section 2 for layout B
-#define Second_MoveB 1200       //moving to section 3 for layout B
+#define Second_MoveB 1150       //moving to section 3 for layout B
 #define ATurn (90)              //turning towards section 3 for layout A
 #define BTurn (-90)             //turning towards section 3 for layout B
 
