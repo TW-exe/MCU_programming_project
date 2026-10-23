@@ -40,6 +40,7 @@ target_sources(${PROJECT_NAME} PRIVATE
   "Src/Sub_FSM/Search_Orient/search_orient.c"
   "Src/Main_FSM/main_fsm.c"
   "Src/Sub_FSM/Pathfind/Pathfind.c"
+  "Src/Sub_FSM/Storage/storage.c"
 )
 
 # Add include directories
@@ -59,6 +60,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
   Src/Sub_FSM/Search_Orient/
   Src/Main_FSM/
   Src/Sub_FSM/Pathfind/
+  Src/Sub_FSM/Storage/
 
   
 )

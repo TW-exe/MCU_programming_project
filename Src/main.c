@@ -32,6 +32,7 @@
 
 #include "search_orient.h"
 #include "Pathfind.h"
+#include "storage.h"
 
 /* Kobuki button values */
 #define BUTTON_0_START  0x01U
@@ -141,11 +142,15 @@ int main(void) {
                 
             case PATHFIND:
             if(Pathfind_FSM(&kobuki)){
+                Start_Storage();
                 state = STORAGE;
             }
             break;
                 
             case STORAGE:
+            if(Storage_FSM(&kobuki)){
+                state=DEPOSIT;
+            }
             break;
             
             case DEPOSIT:
