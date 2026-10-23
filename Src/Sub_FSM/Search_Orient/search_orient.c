@@ -8,8 +8,8 @@
 #define Dist_LayoutA 610        //expected distance of bollard for layout A
 #define Dist_LayoutB 470        //expected distance of bollard for layout B
 #define Dist_Error 60           //error for each side
-#define RotateA (-90)           //rotation for layout A
-#define RotateB (90)            //rotation for layout B
+#define RotateA (-89)           //rotation for layout A
+#define RotateB (89)            //rotation for layout B
 
 
 Layout decision;                                                     //layout decision                   
