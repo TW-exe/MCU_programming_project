@@ -35,7 +35,5 @@ void Ultrasonic_Detect(US_Typedef *object)
         return;
 
     object->range_mm = Ultrasonic_Read();
-    object->detected =
-        (object->range_mm < ULTRASONIC_DETECT_RANGE_MM)
-        ? 1U : 0U;
+    object->detected = (object->range_mm < ULTRASONIC_DETECT_RANGE_MM) ? 1U : 0U;
 }

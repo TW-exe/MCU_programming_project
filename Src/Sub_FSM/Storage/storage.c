@@ -5,11 +5,19 @@
 
 
 //Storage
-static enum {Start_Store, Store_Turn, Store_Move, Storage_Finished} Storage_State;  //storage states
+static enum {Start_Store,
+    Store_Turn,
+    Store_Move,
+    Storage_Finished
+} Storage_State;  //storage states
+
+
 
 void Start_Storage(void) {
     Storage_State=Start_Store;      //start first step in storage
 }
+
+
 
 uint8_t Storage_FSM(Kobuki_Typedef *kobuki){
     switch (Storage_State) {

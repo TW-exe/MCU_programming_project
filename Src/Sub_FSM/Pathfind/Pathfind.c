@@ -8,11 +8,20 @@
 
 
 //Pathfind
-static enum {Start_Path, First_Move, First_Turn, Second_Move, Pathfind_Finished} Pathfind_State;  //pathfind states
+static enum {
+    Start_Path,
+    First_Move,
+    First_Turn,
+    Second_Move,
+    Pathfind_Finished
+} Pathfind_State;  //pathfind states
+
 
 void Start_Pathfind(void) {
     Pathfind_State=Start_Path;      //start first step in pathfind
 }
+
+
 uint8_t Pathfind_FSM(Kobuki_Typedef *kobuki){
     switch (Pathfind_State) {
 

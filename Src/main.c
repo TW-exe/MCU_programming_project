@@ -83,7 +83,6 @@ volatile uint16_t ultrasonic_read = 0; // Zeroed variables to ensure defined beh
 volatile uint16_t adc_read = 0; // Zeroed variables to ensure defined behaviour
     
 int main(void) {
-
     Kobuki_Typedef kobuki = {0}; // Zeroed structs to ensure defined behaviour 
     //US_Typedef object = {0}; // Zeroed structs to ensure defined behaviour
     Kobuki_LED_Enum led_1, led_2;

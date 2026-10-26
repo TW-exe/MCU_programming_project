@@ -16,13 +16,21 @@ Layout decision;                                                     //layout de
 
 
 //SEARCH
-static enum {Search_Rotate, Keep_Searching, Search_Finished} Search_State;  //search states
+static enum {
+    Search_Rotate,
+    Keep_Searching,
+    Search_Finished
+} Search_State;  //search states
+
+
 void Reset_Search(void){
     Search_State = Search_Rotate;                                           //start rotating
 }
 
 uint8_t Search_FSM(Kobuki_Typedef *kobuki, US_Typedef *object){
+    
     uint16_t dist=object->range_mm;                                            //give distance reading
+
     switch (Search_State){
         case Search_Rotate:
             if (dist<=Bollard_Sensed){                                      //if bollard sensed
@@ -62,9 +70,18 @@ uint8_t Search_FSM(Kobuki_Typedef *kobuki, US_Typedef *object){
 }    
 
 //ORIENT
-static enum {Orient_Left, Orient_Right, Orient_Center, Orient_Turn, Orient_Finished} Orient_State;  //orient states
+static enum {
+    Orient_Left,
+    Orient_Right,
+    Orient_Center,
+    Orient_Turn,
+    Orient_Finished
+} Orient_State;  //orient states
+
+
 static int32_t theta_Left, theta_Right;                                                             //orient angles
-static uint8_t seen;                                                                                //bollard is seen
+static uint8_t seen; 
+                                                                               //bollard is seen
 
 void Start_Orient(void) {
     Orient_State = Orient_Left;                                     //start with left side
