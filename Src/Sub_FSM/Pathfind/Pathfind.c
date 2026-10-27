@@ -7,11 +7,11 @@
 #define BTurn (-90)             //turning towards section 3 for layout B
 
 //Cliff / bumper recovery
-#define Reverse_Dist (-30)      //back up 30mm when a cliff or bumper is detected
-#define A_Cliff_Turn (10)       //layout A: rotate +10 degrees after a cliff
-#define A_Bump_Turn (-10)       //layout A: rotate -10 degrees after a bumper hit
-#define B_Cliff_Turn (-10)      //layout B: rotate -10 degrees after a cliff
-#define B_Bump_Turn (10)        //layout B: rotate +10 degrees after a bumper hit
+#define Reverse_Dist (-20)      //back up 30mm when a cliff or bumper is detected
+#define A_Cliff_Turn (5)       //layout A: rotate +10 degrees after a cliff
+#define A_Bump_Turn (-5)       //layout A: rotate -10 degrees after a bumper hit
+#define B_Cliff_Turn (-5)      //layout B: rotate -10 degrees after a cliff
+#define B_Bump_Turn (5)        //layout B: rotate +10 degrees after a bumper hit
 
 //Odometry conversions (must match kobuki.c)
 #define PF_MM_PER_TICK (2.0*3.14159*35.0*((132.0/6545.0)/52.0))   //mm per encoder tick

@@ -1,7 +1,7 @@
 #include "storage.h"
 #define Storage_TurnA (135)         //turning towards storage area for layout A
 #define Storage_TurnB (-135)        //turning towards storage area for layout B
-#define Storage_Move_Dist 1000      //moving into storage area (mm)
+#define Storage_Move_Dist 900      //moving into storage area (mm)
 
 
 //Storage

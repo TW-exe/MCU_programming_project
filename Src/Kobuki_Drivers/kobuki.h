@@ -21,7 +21,7 @@
 
 // Truncated speed
 #define SPEED_LIMIT (int16_t)150   // mm/s
-#define SEARCH_SPEED ((int16_t)75) // mm/s
+#define SEARCH_SPEED ((int16_t)75) // mm/s // orginally 75
 #define STOP ((int16_t)0)          // mm/s
 #define MIN_SPEED ((int16_t)50)    // mm/s
 
