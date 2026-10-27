@@ -12,7 +12,7 @@
 #define REVOLUTIONS_PER_TICK ((132.0 / 6545.0) / 52.0)
 #define MM_PER_TICK (2.0 * PI * WHEEL_RADIUS * REVOLUTIONS_PER_TICK)
 #define DEG_PER_TICK (1.0 / 100.0)
-#define GAIN_ROTATE (0.9 / 0.90)
+#define GAIN_ROTATE (1.0 / 0.90)
 #define GAIN_DRIVE (100.0 / 100.0)
 #define sign(x) ((int8_t)((x) >= 0 ? 1 : -1))
 
