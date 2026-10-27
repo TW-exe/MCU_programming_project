@@ -83,10 +83,14 @@ US_Typedef object = {0}; // Zeroed structs to ensure defined behaviour`
 volatile uint16_t ultrasonic_read = 0; // Zeroed variables to ensure defined behaviour
 volatile uint16_t adc_read = 0; // Zeroed variables to ensure defined behaviour
     
+
+Kobuki_Typedef kobuki = {0}; // Zeroed structs to ensure defined behaviour 
+//US_Typedef object = {0}; // Zeroed structs to ensure defined behaviour
+Kobuki_LED_Enum led_1, led_2;
+
+
 int main(void) {
-    Kobuki_Typedef kobuki = {0}; // Zeroed structs to ensure defined behaviour 
-    //US_Typedef object = {0}; // Zeroed structs to ensure defined behaviour
-    Kobuki_LED_Enum led_1, led_2;
+
 
     UART_Init();
     ADC_Init(); // Has to be executed before Ultrasonic Init, because Ultrasonic subroutine uses ADC subroutine
@@ -109,7 +113,7 @@ int main(void) {
 
 
         //Global safety case switch
-        if(kobuki.button == BUTTON_1_STOP || kobuki.wheeldrop == WHEEL_DROP){
+        if((kobuki.button == BUTTON_1_STOP) || (kobuki.wheeldrop > 0)){
             state = IDLE;
         }
 

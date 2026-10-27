@@ -11,7 +11,7 @@
 
 // Buffer definitions for payload
 #define BUMPER 4
-#define WHEEL_DROP 5
+#define WHEEL_DROP 5 // orginally 5 for some reason
 #define CLIFF 6
 #define DIST_LSB 7       // only needs 1 wheel
 #define DIST_MSB 8
