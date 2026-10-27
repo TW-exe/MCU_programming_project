@@ -33,6 +33,7 @@
 #include "search_orient.h"
 #include "Pathfind.h"
 #include "storage.h"
+#include "deposit.h"
 
 /* Kobuki button values */
 #define BUTTON_0_START  0x01U
@@ -108,7 +109,7 @@ int main(void) {
 
 
         //Global safety case switch
-        if(kobuki.button == BUTTON_1_STOP || kobuki.bumper == BUMPER || kobuki.cliff == CLIFF || kobuki.wheeldrop == WHEEL_DROP){
+        if(kobuki.button == BUTTON_1_STOP || kobuki.wheeldrop == WHEEL_DROP){
             state = IDLE;
         }
 
@@ -148,11 +149,15 @@ int main(void) {
                 
             case STORAGE:
             if(Storage_FSM(&kobuki)){
+                Start_Deposit();
                 state=DEPOSIT;
             }
             break;
             
             case DEPOSIT:
+            if(Deposit_FSM(&kobuki,&object)){
+                state=IDLE;
+            }
             break;
             
             default:
